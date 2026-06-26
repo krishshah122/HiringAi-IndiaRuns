@@ -1,0 +1,13 @@
+artifacts/*.npy
+artifacts/*.pkl
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+env/
+.env
+*.egg-info/
+dist/
+
+candidates.jsonl
+candidates.jsonl
