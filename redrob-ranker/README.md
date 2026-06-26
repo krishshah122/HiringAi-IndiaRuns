@@ -19,9 +19,6 @@ pip install -r requirements.txt
 ### Step 2: Offline Pre-computation
 This step generates dense semantic embeddings for the job description and candidate profiles using a local, cached `all-MiniLM-L6-v2` SentenceTransformer model. 
 *(Note: As per the spec, this offline step may exceed the 5-minute window during setup).*
-
-> Large dataset files such as `candidates.jsonl` should be kept out of the Git repo and excluded via `.gitignore`.
-
 ```bash
 python scripts/precompute.py --candidates ./candidates.jsonl
 ```
