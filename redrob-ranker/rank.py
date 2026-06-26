@@ -16,10 +16,16 @@ from src.pipeline.ranker import run_pipeline
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Rank candidates for Redrob hackathon JD")
+    parser = argparse.ArgumentParser(
+        description="Rank candidates for the Redrob AI hackathon job description"
+    )
     parser.add_argument("--candidates", required=True, help="Path to candidates.jsonl or .json")
     parser.add_argument("--out", required=True, help="Output submission CSV path")
-    parser.add_argument("--config", default=None, help="Path to jd_requirements.yaml")
+    parser.add_argument(
+        "--config",
+        default="config/jd_requirements.yaml",
+        help="Path to JD requirements YAML (default: config/jd_requirements.yaml)",
+    )
     parser.add_argument("--top-n", type=int, default=100, help="Number of rows in submission")
     args = parser.parse_args()
 
