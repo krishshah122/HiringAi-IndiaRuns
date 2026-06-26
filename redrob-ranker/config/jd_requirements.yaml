@@ -1,0 +1,184 @@
+# JD requirements for Senior AI Engineer — Redrob Hackathon
+# Source: job_description.docx + hackathon participant notes
+
+fit_mode: rules  # rules | rules+embeddings | ltr (Phase 6+)
+
+role:
+  positive_title_keywords:
+    - ai engineer
+    - ml engineer
+    - machine learning engineer
+    - applied scientist
+    - research engineer
+    - search engineer
+    - ranking engineer
+    - retrieval engineer
+    - nlp engineer
+    - senior software engineer
+    - staff engineer
+    - principal engineer
+    - data scientist
+    - ml scientist
+  negative_title_keywords:
+    - marketing manager
+    - hr manager
+    - human resources
+    - content writer
+    - graphic designer
+    - accountant
+    - civil engineer
+    - mechanical engineer
+    - sales manager
+    - business analyst
+    - recruiter
+    - copywriter
+
+experience:
+  ideal_min: 5.0
+  ideal_max: 9.0
+  soft_min: 4.0
+  soft_max: 12.0
+
+location:
+  preferred_country: India
+  preferred_cities:
+    - Pune
+    - Noida
+    - Delhi
+    - New Delhi
+    - Gurgaon
+    - Gurugram
+    - Mumbai
+    - Hyderabad
+    - Bangalore
+    - Bengaluru
+  preferred_regions:
+    - Maharashtra
+    - Karnataka
+    - Uttar Pradesh
+    - Haryana
+    - Telangana
+    - Delhi
+
+must_have_skills:
+  - embeddings
+  - embedding
+  - retrieval
+  - vector search
+  - vector database
+  - semantic search
+  - hybrid search
+  - ranking
+  - learning to rank
+  - ndcg
+  - python
+  - faiss
+  - pinecone
+  - weaviate
+  - qdrant
+  - milvus
+  - elasticsearch
+  - opensearch
+  - sentence-transformers
+  - rag
+
+nice_to_have_skills:
+  - lora
+  - qlora
+  - peft
+  - fine-tuning
+  - xgboost
+  - lightgbm
+  - a/b testing
+  - map
+  - mrr
+
+skill_synonyms:
+  embeddings: [embedding, sentence-transformers, bge, e5, openai embeddings]
+  retrieval: [information retrieval, ir, semantic search, hybrid search]
+  vector search: [vector database, vector db, faiss, pinecone, weaviate, qdrant, milvus]
+  ranking: [learning to rank, ltr, reranking, re-ranking]
+  python: [pyspark, django, flask, fastapi]
+
+consulting_firms:
+  - TCS
+  - Tata Consultancy
+  - Infosys
+  - Wipro
+  - Accenture
+  - Cognizant
+  - Capgemini
+  - Mindtree
+  - HCL
+  - Tech Mahindra
+  - LTI
+  - L&T Infotech
+  - Mphasis
+  - Persistent
+  - Cyient
+
+it_services_industries:
+  - IT Services
+  - Consulting
+  - Staffing and Recruiting
+
+production_signals:
+  - shipped
+  - production
+  - deployed
+  - deployed to
+  - real users
+  - a/b test
+  - offline benchmark
+  - online evaluation
+  - at scale
+  - in production
+
+ml_career_signals:
+  - machine learning
+  - deep learning
+  - nlp
+  - natural language
+  - retrieval
+  - ranking
+  - recommendation
+  - embedding
+  - vector
+  - llm
+  - rag
+  - search
+  - rerank
+
+cv_only_signals:
+  - computer vision
+  - image classification
+  - object detection
+  - speech recognition
+  - robotics
+  - autonomous driving
+
+weights:
+  title_career: 0.35
+  skills: 0.25
+  experience: 0.15
+  semantic: 0.15
+  location: 0.10
+
+integrity:
+  exclude_threshold: 0.30
+  penalty_threshold: 0.60
+  expert_skill_stuffer_count: 8
+  max_skills_before_stuffer_check: 12
+
+availability:
+  min_multiplier: 0.75
+  max_multiplier: 1.10
+  stale_active_days: 180
+  low_response_rate: 0.20
+  preferred_notice_days: 30
+
+proficiency_weights:
+  beginner: 0.25
+  intermediate: 0.50
+  advanced: 0.75
+  expert: 1.00

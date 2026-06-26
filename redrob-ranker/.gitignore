@@ -1,0 +1,12 @@
+artifacts/*.npy
+artifacts/*.pkl
+artifacts/
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+env/
+.env
+*.egg-info/
+dist/
+final_submission.csv
