@@ -43,6 +43,8 @@ python rank.py --candidates ./candidates.jsonl --out ./submission.csv
 
 **What may exceed 5 min:** offline pre-computation (embeddings, indexes). Must be documented in README and `submission_metadata.yaml` (`pre_computation_required: true`).
 
+> Do not commit large dataset files like `candidates.jsonl`; exclude them with `.gitignore` to keep the repo lightweight and GitHub-friendly.
+
 ### 2.2 Output format
 
 | Rule | Requirement |
