@@ -31,11 +31,11 @@ reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submi
 # Compute environment
 # ============================================================================
 compute:
-  platform: "MacBook Pro M2"                    # Or: "AWS EC2 c5.4xlarge", "Local Linux box", etc.
-  cpu_cores: 8                                  # Number of CPU cores used
-  ram_gb: 16                                    # Available RAM in GB
-  python_version: "3.11.4"                      # python --version
-  os: "macOS 14.2"                              # Or "Ubuntu 22.04 LTS", etc.
+  platform: "Intel Core i5-1155G7"
+  cpu_cores: 4
+  ram_gb: 16
+  python_version: "3.10.0"
+  os: "Windows 11"
   uses_gpu_for_inference: false                 # Must be false — see compute constraints
   has_network_during_ranking: false             # Must be false — no API calls during ranking
   pre_computation_required: true                # true if you pre-compute embeddings or train models offline
@@ -48,13 +48,19 @@ ai_tools_used:
   - "Antigravity""       
   - "GitHub Copilot"
 ai_usage_summary: |
-  Used Antigravity (Gemini) primarily for repository structural auditing, verifying hackathon constraint compliance, and metadata formatting. Used GitHub Copilot for code autocomplete during development. No candidate data was fed to any external LLM API during the actual ranking execution.
+  Used Antigravity (Gemini) primarily for repository structural auditing, verifying hackathon constraint compliance
+   Used GitHub Copilot for code autocomplete during development.
+  No candidate data was fed to any external LLM API during the actual ranking execution.
 
 # ============================================================================
 # Approach summary (optional but recommended)
 # ============================================================================
 methodology_summary: |
-  We implemented a high-performance Two-Stage Retriever-Ranker pipeline to discover the best candidates within the 5-minute CPU constraint. Stage 1 (Retrieval) scans the 100K pool using explicit rule-based filters (experience, location, honeypot/fraud detection) and fast pre-computed embeddings, narrowing the pool to the top 500 candidates in under 15 seconds. Stage 2 (Deep Re-ranking) builds rich profile text for the top 500 on-the-fly and encodes them using a local SentenceTransformer model. This performs a high-fidelity semantic match of project accomplishments against the job description. The final score is a multiplicative combination of Fit, Availability, and Integrity.
+  We implemented a high-performance Two-Stage Retriever-Ranker pipeline to discover the best candidates within the 5-minute CPU constraint. 
+  Stage 1 (Retrieval) scans the 100K pool using explicit rule-based filters (experience, location, honeypot/fraud detection) and
+  fast pre-computed embeddings, narrowing the pool to the top 500 candidates in under 15 seconds. Stage 2 (Deep Re-ranking) builds rich profile text for the top 500 on-the-fly and encodes them
+  using a local SentenceTransformer model. This performs a high-fidelity semantic match of project accomplishments against the job description. The final score is a multiplicative combination of Fit,
+  Availability, and Integrity.
 
 # ============================================================================
 # Declarations
