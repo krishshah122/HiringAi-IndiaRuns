@@ -43,6 +43,33 @@ This design keeps the Stage 3 command efficient while still using deep semantic 
 
 ---
 
+## What We Use
+
+- **Language:** Python 3.10+
+- **Core libraries:** pandas, numpy, rapidfuzz, pyyaml, sentence-transformers (for offline embeddings), streamlit (sandbox UI), pytest (tests)
+- **Optional / offline:** lightgbm for Learning-to-Rank (LTR) when training offline
+
+Configuration and weights are in `config/jd_requirements.yaml`; semantic artifacts live in `artifacts/` and are produced by `scripts/precompute.py`.
+
+## How Ranking Is Calculated (concise)
+
+- Final score = `FIT × AVAILABILITY × INTEGRITY` (each in [0,1], availability typically clamped to [0.75, 1.10]).
+- **FIT:** role relevance computed as a weighted sum of subcomponents (configurable keys: `title_career`, `skills`, `experience`, `semantic`, `location`). By default this is a rules-based weighted sum; optionally replaced by an offline LTR model (`fit_mode: ltr`) that predicts FIT from the feature vector.
+- **AVAILABILITY:** a defensible multiplier derived from `redrob_signals` (last active date, recruiter response rate, open_to_work flag, notice period, recent activity). Implemented in `src/availability`.
+- **INTEGRITY:** rule-based profile believability score (0–1). Candidates with `INTEGRITY` below the exclusion threshold are skipped (honeypots / traps). Implemented in `src/integrity`.
+
+- **Two-stage flow:** Stage 1 filters and scores all candidates, keeping the top ~500. Stage 2 builds rich profile text for the top candidates, computes high-fidelity semantic similarity, recomputes FIT, then sorts and writes the top-100 CSV with monotonic scores. Ties are broken by `candidate_id` ascending.
+
+## Integrity Checks (summary)
+
+- Timeline impossibilities (tenure/date contradictions)
+- Skill fraud: `expert` flagged with zero duration or zero endorsements
+- Skill stuffing: many expert skills with low credibility
+- Education timeline inconsistencies
+- Honeypot / keyword-stuffer patterns (high AI-skill density, no supporting career evidence)
+
+These rules are intentionally explicit and interpretable so decisions can be defended in Stage 4 manual review and interviews.
+
 ## 🤖 Running the Sandbox App
 
 The interactive sandbox application allows you to upload a small sample file and generate a ranked CSV file.
