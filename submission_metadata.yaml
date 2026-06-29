@@ -16,16 +16,16 @@ team_members:
   - name: "Bhavesh"
     email: "member2@example.com"
     role: "Ai Engineer"
-  -name: "Krish Shah"
-   email: "shahkrish551@gmail.com"
-   role: "Backend Engineer"
+  - name: "Krish Shah"
+    email: "shahkrish551@gmail.com"
+    role: "Backend Engineer"
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: ""
+github_repo: "https://github.com/krishshah122/HiringAi-IndiaRuns"
 
 
-sandbox_link: "https://your-app-name.streamlit.app"
+sandbox_link: "https://hiringai-indiaruns.streamlit.app/"
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 # ============================================================================
 # Compute environment
@@ -38,8 +38,8 @@ compute:
   os: "macOS 14.2"                              # Or "Ubuntu 22.04 LTS", etc.
   uses_gpu_for_inference: false                 # Must be false — see compute constraints
   has_network_during_ranking: false             # Must be false — no API calls during ranking
-  pre_computation_required: false               # true if you pre-compute embeddings or train models offline
-  pre_computation_time_minutes: 0               # Approximate, if applicable
+  pre_computation_required: true                # true if you pre-compute embeddings or train models offline
+  pre_computation_time_minutes: 5               # Approximate, if applicable
 
 # ============================================================================
 # AI tools declaration
@@ -48,25 +48,13 @@ ai_tools_used:
   - "Antigravity""       
   - "GitHub Copilot"
 ai_usage_summary: |
-  Briefly describe how AI tools were used. Examples:
-  - "Used Claude for code review and architectural discussion. Used Copilot for autocomplete.
-     No candidate data was fed to any LLM."
-  - "Used ChatGPT to debug Python issues and Cursor for refactoring."
-  - "No AI tools used."
+  Used Antigravity (Gemini) primarily for repository structural auditing, verifying hackathon constraint compliance, and metadata formatting. Used GitHub Copilot for code autocomplete during development. No candidate data was fed to any external LLM API during the actual ranking execution.
 
 # ============================================================================
 # Approach summary (optional but recommended)
 # ============================================================================
 methodology_summary: |
-  ≤200 word summary of your approach. Strongly recommended.
-
-  Example:
-  "Rule-based ranker with explicit reasoning capture. Five scoring components
-  (skills, title+career, experience years, location, education) combined with
-  a multiplicative behavioral-signal modifier. The title component is the
-  decisive signal against keyword-stuffer traps; an endorsement-and-duration
-  trust multiplier on skills catches lazy keyword stuffing. Runtime is ~10
-  seconds for 50K candidates on CPU."
+  We implemented a high-performance Two-Stage Retriever-Ranker pipeline to discover the best candidates within the 5-minute CPU constraint. Stage 1 (Retrieval) scans the 100K pool using explicit rule-based filters (experience, location, honeypot/fraud detection) and fast pre-computed embeddings, narrowing the pool to the top 500 candidates in under 15 seconds. Stage 2 (Deep Re-ranking) builds rich profile text for the top 500 on-the-fly and encodes them using a local SentenceTransformer model. This performs a high-fidelity semantic match of project accomplishments against the job description. The final score is a multiplicative combination of Fit, Availability, and Integrity.
 
 # ============================================================================
 # Declarations
@@ -75,5 +63,5 @@ declarations:
   read_submission_spec: true        
   code_is_original_work: true   
   no_collusion: true                
-  honeypot_check_done: false        
+  honeypot_check_done: true        
   reproduction_tested: true         

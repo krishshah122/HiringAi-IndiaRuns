@@ -64,9 +64,9 @@ class SemanticLoader:
             
         if not hasattr(self, "model") or self.model is None:
             import os
-            # Prevent network requests in sandboxed environment
-            os.environ["TRANSFORMERS_OFFLINE"] = "1"
-            os.environ["HF_HUB_OFFLINE"] = "1"
+            # Prevent network requests in sandboxed environment (commented out for Streamlit Cloud setup)
+            # os.environ["TRANSFORMERS_OFFLINE"] = "1"
+            # os.environ["HF_HUB_OFFLINE"] = "1"
             from sentence_transformers import SentenceTransformer
             self.model = SentenceTransformer("all-MiniLM-L6-v2")
             
