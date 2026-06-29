@@ -22,10 +22,13 @@ def main() -> int:
     parser.add_argument("--config", default=None, help="Path to jd_requirements.yaml")
     parser.add_argument("--top-n", type=int, default=100, help="Number of rows in submission")
     args = parser.parse_args()
+    out_path = Path(args.out)
+    if out_path.suffix.lower() != ".csv":
+        parser.error("Output path must use a .csv extension.")
 
     result = run_pipeline(
         candidates_path=args.candidates,
-        out_path=args.out,
+        out_path=str(out_path),
         config_path=args.config,
         top_n=args.top_n,
     )

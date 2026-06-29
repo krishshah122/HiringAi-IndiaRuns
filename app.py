@@ -1,11 +1,8 @@
 import streamlit as st
 import pandas as pd
-import json
 import tempfile
 from pathlib import Path
 import sys
-
-# Ensure src is in python path
 ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -14,13 +11,12 @@ from src.pipeline.ranker import run_pipeline
 
 st.set_page_config(
     page_title="Redrob Ranker Sandbox",
-    page_icon="🤖",
     layout="wide"
 )
 
-st.title("🤖 Redrob Candidate Discovery & Ranking Sandbox")
+st.title("Redrob Candidate Discovery & Ranking Sandbox")
 st.write(
-    "Upload a small candidate sample file (`.json` or `.jsonl` with $\le 100$ candidates) "
+    "Upload a candidate sample file (`.json` or `.jsonl`) "
     "to run the ranking pipeline end-to-end and download the ranked CSV output."
 )
 
@@ -31,7 +27,6 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file is not None:
-    # 1. Save uploaded file to a temporary file
     suffix = Path(uploaded_file.name).suffix
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp_in:
         temp_in.write(uploaded_file.read())
@@ -44,21 +39,16 @@ if uploaded_file is not None:
     st.info("File uploaded successfully. Running ranking pipeline...")
     
     try:
-        # Run ranking pipeline using the uploaded candidates (automatically scales top_n down)
         result = run_pipeline(
             candidates_path=temp_in_path,
             out_path=temp_out_path,
             config_path=ROOT / "config" / "jd_requirements.yaml",
             top_n=100
         )
-        
-        # 3. Read output csv to show dataframe preview
         df = pd.read_csv(temp_out_path)
         
         st.success(f"Pipeline executed successfully in {result.elapsed_seconds:.2f} seconds!")
         st.write(f"Processed: **{result.candidates_processed}** | Excluded: **{result.candidates_excluded}**")
-        
-        # Preview top candidates
         st.subheader("Top Ranked Candidates Preview")
         st.dataframe(
             df,
@@ -71,8 +61,6 @@ if uploaded_file is not None:
             hide_index=True,
             use_container_width=True
         )
-        
-        # 4. Read file content for download button
         with open(temp_out_path, "r", encoding="utf-8") as f:
             csv_data = f.read()
             
@@ -88,7 +76,6 @@ if uploaded_file is not None:
         st.error(f"Error executing pipeline: {e}")
         
     finally:
-        # Cleanup temporary files safely
         try:
             if temp_in_path.exists():
                 temp_in_path.unlink()

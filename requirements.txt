@@ -4,3 +4,4 @@ rapidfuzz>=3.6.0
 pytest>=8.0.0
 sentence-transformers>=2.3.0
 pandas>=2.0.0
+streamlit>=1.26.0
